@@ -1,0 +1,57 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --background: 220 33% 98%;
+  --foreground: 222 47% 11%;
+  --card: 0 0% 100%;
+  --card-foreground: 222 47% 11%;
+  --primary: 233 92% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 220 14% 96%;
+  --secondary-foreground: 222 47% 11%;
+  --muted: 220 14% 96%;
+  --muted-foreground: 220 8% 46%;
+  --accent: 257 90% 67%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 84% 60%;
+  --destructive-foreground: 0 0% 100%;
+  --border: 220 13% 91%;
+  --ring: 233 92% 60%;
+}
+
+.dark {
+  --background: 222 47% 7%;
+  --foreground: 0 0% 98%;
+  --card: 222 47% 10%;
+  --card-foreground: 0 0% 98%;
+  --primary: 233 92% 60%;
+  --primary-foreground: 0 0% 100%;
+  --secondary: 222 22% 14%;
+  --secondary-foreground: 0 0% 98%;
+  --muted: 222 22% 14%;
+  --muted-foreground: 215 20% 65%;
+  --accent: 257 90% 67%;
+  --accent-foreground: 0 0% 100%;
+  --destructive: 0 62% 45%;
+  --destructive-foreground: 0 0% 98%;
+  --border: 222 22% 18%;
+  --ring: 233 92% 60%;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+body {
+  background: radial-gradient(1200px 600px at 10% 10%, hsl(var(--primary) / 0.14), transparent),
+    radial-gradient(900px 500px at 90% 20%, hsl(var(--accent) / 0.12), transparent),
+    hsl(var(--background));
+  color: hsl(var(--foreground));
+}
+
+::selection {
+  background: hsl(var(--primary) / 0.25);
+}
