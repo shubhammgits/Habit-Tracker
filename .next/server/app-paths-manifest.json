@@ -4,8 +4,12 @@
   "/api/auth/me/route": "app/api/auth/me/route.js",
   "/api/auth/signin/route": "app/api/auth/signin/route.js",
   "/api/auth/signup/route": "app/api/auth/signup/route.js",
-  "/page": "app/page.js",
-  "/signin/page": "app/signin/page.js",
+  "/api/habits/[habitId]/analytics/route": "app/api/habits/[habitId]/analytics/route.js",
+  "/api/habits/[habitId]/logs/route": "app/api/habits/[habitId]/logs/route.js",
+  "/api/habits/[habitId]/route": "app/api/habits/[habitId]/route.js",
+  "/api/habits/route": "app/api/habits/route.js",
   "/dashboard/page": "app/dashboard/page.js",
-  "/signup/page": "app/signup/page.js"
+  "/signup/page": "app/signup/page.js",
+  "/page": "app/page.js",
+  "/signin/page": "app/signin/page.js"
 }

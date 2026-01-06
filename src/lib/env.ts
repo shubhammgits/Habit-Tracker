@@ -9,11 +9,27 @@ const envSchema = z.object({
   NODE_ENV: z.enum(["development", "test", "production"]).optional(),
 });
 
-export const env = envSchema.parse({
-  MONGODB_URI: process.env.MONGODB_URI,
-  JWT_SECRET: process.env.JWT_SECRET,
-  JWT_ISSUER: process.env.JWT_ISSUER ?? "habit-tracker",
-  JWT_AUDIENCE: process.env.JWT_AUDIENCE ?? "habit-tracker-web",
-  APP_ORIGIN: process.env.APP_ORIGIN ?? "http://localhost:3000",
-  NODE_ENV: process.env.NODE_ENV,
-});
+export type Env = z.infer<typeof envSchema>;
+
+let cachedEnv: Env | null = null;
+
+export function getEnv(): Env {
+  if (cachedEnv) return cachedEnv;
+
+  const parsed = envSchema.safeParse({
+    MONGODB_URI: process.env.MONGODB_URI,
+    JWT_SECRET: process.env.JWT_SECRET,
+    JWT_ISSUER: process.env.JWT_ISSUER ?? "habit-tracker",
+    JWT_AUDIENCE: process.env.JWT_AUDIENCE ?? "habit-tracker-web",
+    APP_ORIGIN: process.env.APP_ORIGIN ?? "http://localhost:3000",
+    NODE_ENV: process.env.NODE_ENV,
+  });
+
+  if (!parsed.success) {
+    const missing = parsed.error.issues.map((i) => i.path.join(".")).join(", ");
+    throw new Error(`Missing/invalid environment variables: ${missing}`);
+  }
+
+  cachedEnv = parsed.data;
+  return cachedEnv;
+}

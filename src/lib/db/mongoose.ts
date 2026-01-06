@@ -1,5 +1,5 @@
 import mongoose from "mongoose";
-import { env } from "@/lib/env";
+import { getEnv } from "@/lib/env";
 
 type MongooseCache = {
   conn: typeof mongoose | null;
@@ -18,6 +18,7 @@ export async function connectToDatabase(): Promise<typeof mongoose> {
   if (cache.conn) return cache.conn;
 
   if (!cache.promise) {
+    const env = getEnv();
     cache.promise = mongoose
       .connect(env.MONGODB_URI, {
         autoIndex: true,

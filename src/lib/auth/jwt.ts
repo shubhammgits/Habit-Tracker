@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import { env } from "@/lib/env";
+import { getEnv } from "@/lib/env";
 
 export type SessionTokenPayload = {
   sub: string; // userId
@@ -11,6 +11,7 @@ export type SessionTokenPayload = {
 };
 
 export function signSessionToken(params: { userId: string; email: string }): string {
+  const env = getEnv();
   return jwt.sign(
     {
       sub: params.userId,
@@ -27,6 +28,7 @@ export function signSessionToken(params: { userId: string; email: string }): str
 }
 
 export function verifySessionToken(token: string): SessionTokenPayload {
+  const env = getEnv();
   return jwt.verify(token, env.JWT_SECRET, {
     algorithms: ["HS256"],
     issuer: env.JWT_ISSUER,

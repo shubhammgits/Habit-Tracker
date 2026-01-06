@@ -1,4 +1,4 @@
-import { env } from "@/lib/env";
+import { getEnv } from "@/lib/env";
 
 export function enforceSameOrigin(request: Request): void {
   // Cookie-based auth requires CSRF mitigation.
@@ -14,6 +14,7 @@ export function enforceSameOrigin(request: Request): void {
     if (origin.startsWith("http://localhost") || origin.startsWith("http://127.0.0.1")) return;
   }
 
+  const env = getEnv();
   if (origin !== env.APP_ORIGIN) {
     throw new Error("INVALID_ORIGIN");
   }

@@ -4,8 +4,12 @@
   "/api/auth/me/route": "/api/auth/me",
   "/api/auth/signin/route": "/api/auth/signin",
   "/api/auth/signup/route": "/api/auth/signup",
-  "/page": "/",
-  "/signin/page": "/signin",
+  "/api/habits/[habitId]/analytics/route": "/api/habits/[habitId]/analytics",
+  "/api/habits/[habitId]/logs/route": "/api/habits/[habitId]/logs",
+  "/api/habits/[habitId]/route": "/api/habits/[habitId]",
+  "/api/habits/route": "/api/habits",
   "/dashboard/page": "/dashboard",
-  "/signup/page": "/signup"
+  "/signup/page": "/signup",
+  "/page": "/",
+  "/signin/page": "/signin"
 }
