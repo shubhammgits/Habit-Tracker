@@ -5,12 +5,14 @@ import { motion } from "framer-motion";
 import { ThemeToggle } from "@/components/theme/theme-toggle";
 import { useMe } from "@/hooks/api/use-me";
 import { useHabitsStore } from "@/store/habits";
-import { getLocalYmd, getTzOffsetMinutes, isScheduledOnDate } from "@/lib/date/client";
+import { isScheduledOnDate } from "@/lib/date/client";
+import { useToday } from "@/hooks/use-today";
 import { HabitSidebar } from "@/components/habit/habit-sidebar";
 import { HabitCreateModal } from "@/components/habit/habit-create-modal";
 import { HabitCheck } from "@/components/habit/habit-check";
 import { HabitAnalytics } from "@/components/habit/habit-analytics";
 import { HabitActions } from "@/components/habit/habit-actions";
+import { OverviewWidget } from "@/components/analytics/overview";
 import { Card } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
 import type { Habit } from "@/types/habit";
@@ -25,8 +27,7 @@ function Badge({ children }: { children: React.ReactNode }) {
 
 export default function DashboardPage() {
   const { email } = useMe();
-  const ymd = useMemo(() => getLocalYmd(), []);
-  const tzOffset = useMemo(() => getTzOffsetMinutes(), []);
+  const { ymd, tzOffset } = useToday();
 
   const { habits, selectedHabitId, setSelectedHabitId, refresh, loading, error, upsertLocal, removeLocal, setCompletedTodayLocal } =
     useHabitsStore();
@@ -70,6 +71,23 @@ export default function DashboardPage() {
     }
   }
 
+  async function exportCsv() {
+    const url = `/api/export/csv?date=${encodeURIComponent(ymd)}&tzOffset=${encodeURIComponent(tzOffset)}&days=180`;
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const blob = await res.blob();
+    const objectUrl = URL.createObjectURL(blob);
+
+    const a = document.createElement("a");
+    a.href = objectUrl;
+    a.download = `habit-tracker-export_${ymd}.csv`;
+    document.body.appendChild(a);
+    a.click();
+    a.remove();
+
+    setTimeout(() => URL.revokeObjectURL(objectUrl), 10_000);
+  }
+
   return (
     <main className="min-h-screen">
       <div className="grid grid-cols-1 md:grid-cols-[320px_1fr]">
@@ -106,7 +124,12 @@ export default function DashboardPage() {
                     <h1 className="text-xl font-semibold tracking-tight">Today</h1>
                     <p className="text-sm text-muted-foreground">{ymd} (local)</p>
                   </div>
-                  <Button onClick={() => setCreateOpen(true)}>Create habit</Button>
+                  <div className="flex items-center gap-2">
+                    <Button variant="secondary" onClick={exportCsv}>
+                      Export CSV
+                    </Button>
+                    <Button onClick={() => setCreateOpen(true)}>Create habit</Button>
+                  </div>
                 </div>
 
                 {error ? (
@@ -152,6 +175,10 @@ export default function DashboardPage() {
                   </div>
                 )}
               </Card>
+
+              <div className="mt-4">
+                <OverviewWidget ymd={ymd} tzOffset={tzOffset} />
+              </div>
 
               {selected ? (
                 <Card className="mt-4">
