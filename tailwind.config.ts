@@ -11,22 +11,35 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        background: "hsl(var(--background))",
-        foreground: "hsl(var(--foreground))",
-        card: "hsl(var(--card))",
-        "card-foreground": "hsl(var(--card-foreground))",
-        primary: "hsl(var(--primary))",
-        "primary-foreground": "hsl(var(--primary-foreground))",
-        secondary: "hsl(var(--secondary))",
-        "secondary-foreground": "hsl(var(--secondary-foreground))",
-        muted: "hsl(var(--muted))",
-        "muted-foreground": "hsl(var(--muted-foreground))",
-        accent: "hsl(var(--accent))",
-        "accent-foreground": "hsl(var(--accent-foreground))",
-        destructive: "hsl(var(--destructive))",
-        "destructive-foreground": "hsl(var(--destructive-foreground))",
-        border: "hsl(var(--border))",
-        ring: "hsl(var(--ring))",
+        background: "hsl(var(--background) / <alpha-value>)",
+        foreground: "hsl(var(--foreground) / <alpha-value>)",
+        card: "hsl(var(--card) / <alpha-value>)",
+        "card-foreground": "hsl(var(--card-foreground) / <alpha-value>)",
+
+        primary: "hsl(var(--primary) / <alpha-value>)",
+        "primary-foreground": "hsl(var(--primary-foreground) / <alpha-value>)",
+        "primary-glow": "hsl(var(--primary-glow) / <alpha-value>)",
+
+        secondary: "hsl(var(--secondary) / <alpha-value>)",
+        "secondary-foreground": "hsl(var(--secondary-foreground) / <alpha-value>)",
+        "secondary-glow": "hsl(var(--secondary-glow) / <alpha-value>)",
+
+        muted: "hsl(var(--muted) / <alpha-value>)",
+        "muted-foreground": "hsl(var(--muted-foreground) / <alpha-value>)",
+
+        destructive: "hsl(var(--destructive) / <alpha-value>)",
+        "destructive-foreground": "hsl(var(--destructive-foreground) / <alpha-value>)",
+
+        border: "hsl(var(--border) / <alpha-value>)",
+        ring: "hsl(var(--ring) / <alpha-value>)",
+
+        category: {
+          health: "hsl(var(--category-health) / <alpha-value>)",
+          study: "hsl(var(--category-study) / <alpha-value>)",
+          fitness: "hsl(var(--category-fitness) / <alpha-value>)",
+          productivity: "hsl(var(--category-productivity) / <alpha-value>)",
+          custom: "hsl(var(--category-custom) / <alpha-value>)",
+        },
       },
       fontFamily: {
         sans: ["var(--font-sans)", ...defaultTheme.fontFamily.sans],
@@ -80,7 +93,8 @@ const config: Config = {
         lg: "0 10px 15px -3px rgb(0 0 0 / 0.1), 0 4px 6px -4px rgb(0 0 0 / 0.1)",
         xl: "0 20px 25px -5px rgb(0 0 0 / 0.1), 0 8px 10px -6px rgb(0 0 0 / 0.1)",
         "2xl": "0 25px 50px -12px rgb(0 0 0 / 0.25)",
-        glass: "0 8px 32px 0 rgba(31, 38, 135, 0.37)",
+        // Spec: Card shadows + glow effects
+        glass: "0 4px 6px -1px hsl(var(--primary) / 0.10), 0 0 20px hsl(var(--primary) / 0.18)",
       },
       opacity: {
         glass: "0.95",
@@ -91,19 +105,16 @@ const config: Config = {
     function ({ addUtilities }: any) {
       addUtilities({
         ".glass": {
-          "@apply bg-white/10 backdrop-blur-md border border-white/20 rounded-lg":
-            {},
+          "@apply bg-card/80 backdrop-blur-[12px] border border-border/60 rounded-xl": {},
         },
         ".glass-dark": {
-          "@apply bg-black/10 backdrop-blur-md border border-white/10 rounded-lg":
-            {},
+          "@apply bg-card/80 backdrop-blur-[12px] border border-border/60 rounded-xl": {},
         },
         ".smooth-transition": {
           "@apply transition-all duration-300 ease-out": {},
         },
         ".gradient-text": {
-          "@apply bg-gradient-to-r from-blue-600 to-purple-600 bg-clip-text text-transparent":
-            {},
+          "@apply bg-gradient-to-r from-primary-glow to-secondary-glow bg-clip-text text-transparent": {},
         },
       });
     },

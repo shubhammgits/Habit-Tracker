@@ -1,0 +1,17 @@
+{
+  "/_not-found/page": "/_not-found",
+  "/api/analytics/overview/route": "/api/analytics/overview",
+  "/api/auth/logout/route": "/api/auth/logout",
+  "/api/auth/me/route": "/api/auth/me",
+  "/api/auth/signin/route": "/api/auth/signin",
+  "/api/auth/signup/route": "/api/auth/signup",
+  "/api/export/csv/route": "/api/export/csv",
+  "/api/habits/[habitId]/analytics/route": "/api/habits/[habitId]/analytics",
+  "/api/habits/[habitId]/logs/route": "/api/habits/[habitId]/logs",
+  "/api/habits/[habitId]/route": "/api/habits/[habitId]",
+  "/api/habits/route": "/api/habits",
+  "/dashboard/page": "/dashboard",
+  "/page": "/",
+  "/signin/page": "/signin",
+  "/signup/page": "/signup"
+}
